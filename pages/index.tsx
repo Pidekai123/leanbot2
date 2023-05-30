@@ -13,6 +13,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
+
 export default function Home() {
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -119,6 +120,40 @@ export default function Home() {
       e.preventDefault();
     }
   };
+
+  //upload file
+  useEffect(() => {
+    const form = document.getElementById('upload-form');
+    const input = document.getElementById('file-input');
+  
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+  
+      const formData = new FormData();
+      formData.append('file', input.files[0]);
+  
+      fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          // replace this with how you want to handle/display errors
+          console.error(data.error);
+        } else {
+          // replace this with how you want to show success messages
+          alert('File uploaded successfully');
+        }
+      })
+      .catch(error => {
+        // replace this with how you want to handle/display errors
+        console.error(error);
+      });
+    });
+  }, []);
+  
+
 
   return (
     <>
@@ -260,17 +295,41 @@ export default function Home() {
             )}
             sup
 
-            <form method="POST" action="/api/upload" encType="multipart/form-data">
-            <input type="file" name="file" accept=".pdf" />
+            <form id="upload-form">
+            <input id="file-input" type="file" name="file" accept=".pdf" />
             <button type="submit">Upload</button>
             </form>
 
+
+
+            <button
+  onClick={async () => {
+    try {
+      const res = await fetch('/api/ingest-data', { method: 'POST' });
+      if (!res.ok) throw new Error('Failed to run the script');
+      const data = await res.json();
+      alert(data.message);
+    } catch (error) {
+      alert(error.message);
+    }
+  }}
+>
+  Run Script
+</button>
+
+
+              
           </main>
         </div>
         <footer className="m-auto p-4">
             Powered by LangChainAI
         </footer>
+        
       </Layout>
     </>
   );
+
+
+
+  
 }

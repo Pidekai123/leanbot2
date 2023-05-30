@@ -6,7 +6,7 @@ import path from 'path';
 // Set The Storage Engine
 const storage = multer.diskStorage({
   destination: async function(req, file, cb) {
-    const dir = '/var/www/html/leanbot/leanbot2/docs';
+    const dir = '../leanbot2/docs';
     await fs.mkdir(dir, { recursive: true });
     cb(null, dir);
   },
@@ -55,3 +55,5 @@ export default function uploadHandler(req: NextApiRequest, res: NextApiResponse)
     res.status(405).json({ error: 'Method not allowed' });
   }
 }
+
+
