@@ -125,7 +125,7 @@ export default function Home() {
       <Layout>
         <div className="mx-auto flex flex-col gap-4">
           <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center">
-            Chat With Your Docs
+            Chat with leanbot (alpha version)
           </h1>
           <main className={styles.main}>
             <div className={styles.cloud}>
@@ -258,12 +258,17 @@ export default function Home() {
                 <p className="text-red-500">{error}</p>
               </div>
             )}
+            sup
+
+            <form method="POST" action="/api/upload" encType="multipart/form-data">
+            <input type="file" name="file" accept=".pdf" />
+            <button type="submit">Upload</button>
+            </form>
+
           </main>
         </div>
         <footer className="m-auto p-4">
-          <a href="https://twitter.com/mayowaoshin">
-            Powered by LangChainAI. Demo built by Mayo (Twitter: @mayowaoshin).
-          </a>
+            Powered by LangChainAI
         </footer>
       </Layout>
     </>
