@@ -25,7 +25,7 @@ export default function Home() {
   }>({
     messages: [
       {
-        message: 'Hi, what would you like to learn about this document?',
+        message: 'Hi I am Leanbot how can i help you?',
         type: 'apiMessage',
       },
     ],
