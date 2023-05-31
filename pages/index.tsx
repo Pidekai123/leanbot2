@@ -153,7 +153,17 @@ export default function Home() {
     });
   }, []);
   
-
+  //run ingestion
+  const runIngestion = async () => {
+    try {
+      const res = await fetch('/api/runIngest', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      alert(data.message); // Alert with success message
+    } catch (error) {
+      alert(`Failed to run ingestion script: ${error.message}`);
+    }
+  };
 
   return (
     <>
@@ -300,22 +310,7 @@ export default function Home() {
             <button type="submit">Upload</button>
             </form>
 
-
-
-            <button
-  onClick={async () => {
-    try {
-      const res = await fetch('/api/ingest-data', { method: 'POST' });
-      if (!res.ok) throw new Error('Failed to run the script');
-      const data = await res.json();
-      alert(data.message);
-    } catch (error) {
-      alert(error.message);
-    }
-  }}
->
-  Run Script
-</button>
+            <button onClick={runIngestion}>Run Ingestion Script (Can take up to 5 Minutes, you can upload all your files and then run this)</button>
 
 
               
